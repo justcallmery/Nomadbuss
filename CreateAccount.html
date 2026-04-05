@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomad Dark Auth</title>
+    <style>
+        /* Base Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Crucial: ensures padding doesn't push width past 100% */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* Deep Black background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px; /* Buffer space so container never touches screen edges */
+        }
+
+        /* Responsive Container */
+        .auth-card {
+            background-color: #ffffff; /* Dark Gray surface */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 100%;       /* Takes full width available... */
+            max-width: 380px;  /* ...but stops at 380px on desktop */
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ebebeb; /* Subtle border for depth */
+        }
+
+        .form-box {
+            transition: transform 0.4s ease, opacity 0.3s ease;
+        }
+
+        .hidden {
+            display: none;
+            transform: translateX(30px);
+            opacity: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #020202;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Input Styling - Dark Mode */
+        input {
+            padding: 12px;
+            margin-bottom: 15px;
+            background-color: #ffffff;
+            border: 1px solid #8a8a8a;
+            border-radius: 6px;
+            color: #000000;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #383838; /* Green glow on focus */
+        }
+
+        /* Buttons and Links */
+        button {
+            padding: 14px;
+            background-color: #1e1e1e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+            transition: 0.3s ease;
+        }
+
+        button:hover { background-color: #545454; }
+
+        p { text-align: center; font-size: 13px; color: #474747; margin-top: 20px; }
+
+        a { color: #3d9af2; text-decoration: none; cursor: pointer; }
+        a:hover { text-decoration: underline; }
+
+        /* Table for Sign Up */
+        .signup-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .signup-table td { padding: 4px 0; }
+        .signup-table input { width: 100%; margin-bottom: 8px; }
+
+    </style>
+</head>
+<body>
+
+<div class="auth-card" id="card">
+    
+    <div id="signin-box" class="form-box">
+        <h1>Sign in</h1>
+        <form>
+            <input type="text" placeholder="Username" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Sign in</button>
+        </form>
+        <p>Don't have an account? <a onclick="toggleAuth()">Sign up</a></p>
+    </div>
+
+    <div id="signup-box" class="form-box hidden">
+        <h1>Sign up</h1>
+        <form>
+            <table class="signup-table">
+                <tr><td><input type="text" placeholder="First Name"></td></tr>
+                <tr><td><input type="text" placeholder="Last Name"></td></tr>
+                <tr><td><input type="email" placeholder="Email"></td></tr>
+                <tr><td><input type="password" placeholder="Password"></td></tr>
+            </table>
+            <button type="submit">Register</button>
+        </form>
+        <p>Already a member? <a onclick="toggleAuth()">Sign in</a></p>
+    </div>
+
+</div>
+
+<script>
+    function toggleAuth() {
+        const signin = document.getElementById('signin-box');
+        const signup = document.getElementById('signup-box');
+
+        if (signup.classList.contains('hidden')) {
+            // Out with Sign In, In with Sign Up
+            signin.style.opacity = "0";
+            signin.style.transform = "translateX(-20px)";
+            
+            setTimeout(() => {
+                signin.classList.add('hidden');
+                signup.classList.remove('hidden');
+                setTimeout(() => {
+                    signup.style.opacity = "1";
+                    signup.style.transform = "translateX(0)";
+                }, 50);
+            }, 300);
+        } else {
+            // Back to Sign In
+            signup.style.opacity = "0";
+            signup.style.transform = "translateX(20px)";
+
+            setTimeout(() => {
+                signup.classList.add('hidden');
+                signin.classList.remove('hidden');
+                setTimeout(() => {
+                    signin.style.opacity = "1";
+                    signin.style.transform = "translateX(0)";
+                }, 50);
+            }, 300);
+        }
+    }
+</script>
+
+</body>
+</html>
